@@ -191,16 +191,31 @@
       });
     });
 
-    // Clean up URLs to prevent extra slashes
-    document.querySelectorAll('a').forEach(link => {
-      link.addEventListener('click', function(event) {
-        const cleanUrl = this.getAttribute('href').replace(/\/+$/, '');
-        if (cleanUrl !== this.getAttribute('href')) {
-          event.preventDefault();
-          window.location.href = cleanUrl;
-        }
+    // Clean up URLs and prevent multiple clicks
+    (function() {
+      let isNavigating = false;
+
+      document.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', function(event) {
+          if (isNavigating) {
+            event.preventDefault();
+            return;
+          }
+
+          isNavigating = true;
+          const cleanUrl = this.getAttribute('href').replace(/\/+$/, '');
+          if (cleanUrl !== this.getAttribute('href')) {
+            event.preventDefault();
+            window.location.href = cleanUrl;
+          }
+
+          // Reset navigation flag after a short delay
+          setTimeout(() => {
+            isNavigating = false;
+          }, 1000);
+        });
       });
-    });
+    })();
   </script>
 </body>
 </html>
