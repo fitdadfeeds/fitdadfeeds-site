@@ -1,0 +1,145 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row =>
+                    row.some(cell => cell !== '' && cell !== null && cell !== undefined)
+                );
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="A simple yet elegant Prosciutto Salmon with Garlic Butter recipe from FitDadFeeds. Perfect for a healthy family dinner!">
+  <meta name="keywords" content="prosciutto salmon, garlic butter salmon, healthy dinner recipes, FitDadFeeds">
+  <meta name="author" content="FitDadFeeds">
+  <title>Prosciutto Salmon with Garlic Butter - FitDadFeeds</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@900&family=Bebas+Neue&family=Lora&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" href="https://fitdadfeeds-static-site.s3.amazonaws.com/assets/favicon.png">
+  <style>
+    body {
+      background-color: #F5E8C7; /* Creamy Beige */
+      color: #333333; /* Charcoal Gray */
+      font-family: 'Lora', serif;
+    }
+    h1, h2, h3 {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 900;
+      color: #333333; /* Charcoal Gray */
+    }
+    .highlight {
+      font-family: 'Bebas Neue', sans-serif;
+      color: #D94F30; /* Burnt Sienna */
+    }
+    .nav-link {
+      font-family: 'Lora', serif;
+      color: #F5E8C7; /* Creamy Beige */
+    }
+    .nav-link:hover {
+      color: #D94F30; /* Burnt Sienna */
+    }
+    .header-link {
+      text-decoration: none;
+      color: #F5E8C7; /* Creamy Beige */
+    }
+    .header-link:hover {
+      color: #D94F30; /* Burnt Sienna */
+    }
+    a {
+      color: #D94F30; /* Burnt Sienna */
+    }
+    a:hover {
+      color: #8A9A5B; /* Sage Green */
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="bg-gray-800 p-4">
+    <div class="container mx-auto flex flex-wrap items-center justify-between">
+      <div class="flex items-center space-x-4">
+        <!-- Logo -->
+        <a href="/" class="flex-shrink-0">
+          <img src="https://fitdadfeeds-static-site.s3.amazonaws.com/assets/fitdadfeeds-logo.png" alt="FitDadFeeds Logo" class="h-10 sm:h-12">
+        </a>
+        <a href="/" class="header-link">
+          <h1 class="text-xl sm:text-2xl" style="color: #F5E8C7;">FitDadFeeds</h1>
+        </a>
+      </div>
+      <nav class="mt-2 sm:mt-0 flex space-x-2 sm:space-x-4">
+        <a href="/" class="nav-link px-2 text-sm sm:text-base">Home</a>
+        <a href="/categories" class="nav-link px-2 text-sm sm:text-base">Categories</a>
+        <a href="/about" class="nav-link px-2 text-sm sm:text-base">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="container mx-auto p-4">
+    <h1 class="text-3xl mb-4 highlight">Prosciutto Salmon with Garlic Butter</h1>
+    <p class="text-[#333333] mb-6">A simple yet elegant dish with crispy prosciutto and rich garlic butter, perfect for a healthy family dinner.</p>
+
+    <!-- Recipe Image (Placeholder) -->
+    <div class="mb-6">
+      <img src="https://fitdadfeeds-static-site.s3.amazonaws.com/assets/prosciutto-salmon-with-garlic-butter.jpg" alt="Prosciutto Salmon with Garlic Butter" class="w-full h-64 object-cover rounded">
+    </div>
+
+    <!-- Ingredients -->
+    <section class="mb-6">
+      <h2 class="text-xl mb-2">Ingredients</h2>
+      <ul class="list-disc list-inside text-[#333333]">
+        <li>4 salmon fillets (about 6 oz each)</li>
+        <li>4 slices of prosciutto</li>
+        <li>3 tbsp unsalted butter</li>
+        <li>3 cloves garlic, minced</li>
+        <li>1 tbsp olive oil</li>
+        <li>Salt and pepper to taste</li>
+        <li>Fresh parsley, chopped (for garnish)</li>
+        <li>Lemon wedges (for serving)</li>
+      </ul>
+    </section>
+
+    <!-- Instructions -->
+    <section class="mb-6">
+      <h2 class="text-xl mb-2">Instructions</h2>
+      <ol class="list-decimal list-inside text-[#333333]">
+        <li>Preheat your oven to 400°F (200°C).</li>
+        <li>Pat the salmon fillets dry with a paper towel and season with salt and pepper.</li>
+        <li>Wrap each salmon fillet with a slice of prosciutto, tucking the ends underneath.</li>
+        <li>In a large oven-safe skillet, heat olive oil over medium-high heat. Place the salmon fillets prosciutto-side down and sear for 2-3 minutes until the prosciutto is crispy.</li>
+        <li>Flip the salmon and add butter and minced garlic to the skillet. Spoon the garlic butter over the salmon as it melts, cooking for another 1-2 minutes.</li>
+        <li>Transfer the skillet to the preheated oven and bake for 5-7 minutes, or until the salmon is cooked to your desired doneness (internal temperature of 145°F/63°C for medium).</li>
+        <li>Remove from the oven, garnish with chopped parsley, and serve with lemon wedges on the side.</li>
+      </ol>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-gray-800 p-4 text-center">
+    <p class="text-[#F5E8C7]">© 2025 FitDadFeeds. All rights reserved.</p>
+  </footer>
+</body>
+</html>
