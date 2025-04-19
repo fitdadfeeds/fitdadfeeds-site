@@ -126,8 +126,8 @@
       <h2 class="text-xl mb-4">Featured Recipe</h2>
       <div class="bg-white p-4 rounded shadow">
         <h3 class="text-lg highlight">Prosciutto Salmon with Garlic Butter</h3>
-        <p class="text-[#333333]">A simple yet elegant dish with crispy prosciutto and rich garlic butter, perfect for a healthy family dinner.</p>
-        <a href="/recipes/prosciutto-salmon-with-garlic-butter" class="text-[#D94F30] hover:underline">View Recipe</a>
+        <p class="text-[#333333] mb-2">A simple yet elegant dish with crispy prosciutto and rich garlic butter, perfect for a healthy family dinner.</p>
+        <a href="/recipes/prosciutto-salmon-with-garlic-butter" class="highlight hover:underline">View Recipe</a>
       </div>
     </section>
 
@@ -184,8 +184,8 @@
         resultDiv.className = 'search-result';
         resultDiv.innerHTML = `
           <h3 class="text-lg font-semibold">${recipe.title}</h3>
-          <p class="text-[#333333]">${recipe.description}</p>
-          <a href="${recipe.url}" class="highlight">View Recipe</a>
+          <p class="text-[#333333] mb-2">${recipe.description}</p>
+          <a href="${recipe.url}" class="highlight hover:underline">View Recipe</a>
         `;
         searchResults.appendChild(resultDiv);
       });
