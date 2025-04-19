@@ -69,6 +69,13 @@
     .category-card:hover {
       transform: scale(1.05);
     }
+    .header-link {
+      text-decoration: none;
+      color: #F5E8C7; /* Creamy Beige */
+    }
+    .header-link:hover {
+      color: #D94F30; /* Burnt Sienna */
+    }
   </style>
 </head>
 <body>
@@ -77,10 +84,12 @@
     <div class="container mx-auto flex flex-wrap items-center justify-between">
       <div class="flex items-center space-x-4">
         <!-- Logo -->
-        <div class="flex-shrink-0">
+        <a href="/" class="flex-shrink-0">
           <img src="https://fitdadfeeds-static-site.s3.amazonaws.com/assets/fitdadfeeds-logo.png" alt="FitDadFeeds Logo" class="h-10 sm:h-12">
-        </div>
-        <h1 class="text-xl sm:text-2xl" style="color: #F5E8C7;">FitDadFeeds</h1>
+        </a>
+        <a href="/" class="header-link">
+          <h1 class="text-xl sm:text-2xl" style="color: #F5E8C7;">FitDadFeeds</h1>
+        </a>
       </div>
       <nav class="mt-2 sm:mt-0 flex space-x-2 sm:space-x-4">
         <a href="/" class="nav-link px-2 text-sm sm:text-base">Home</a>
