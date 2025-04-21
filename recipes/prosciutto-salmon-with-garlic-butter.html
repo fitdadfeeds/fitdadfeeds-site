@@ -32,8 +32,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="A simple yet elegant Prosciutto Salmon with Garlic Butter recipe from FitDadFeeds. Perfect for a healthy family dinner!">
-  <meta name="keywords" content="prosciutto salmon, garlic butter salmon, healthy dinner recipes, FitDadFeeds">
+  <meta name="description" content="A simple Prosciutto Salmon with Garlic Butter recipe from FitDadFeeds. Perfect for a healthy family dinner with clean, whole ingredients!">
+  <meta name="keywords" content="prosciutto salmon, garlic butter salmon, healthy dinner recipes, clean eating, family-friendly meals, seafood recipes, FitDadFeeds">
   <meta name="author" content="FitDadFeeds">
   <title>Prosciutto Salmon with Garlic Butter - FitDadFeeds</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
@@ -74,6 +74,52 @@
     a:hover {
       color: #8A9A5B; /* Sage Green */
     }
+    .recipe-card {
+      background-color: #F5E8C7; /* Creamy Beige */
+      border: 2px solid #8A9A5B; /* Sage Green */
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin-top: 2rem;
+    }
+    .jump-button {
+      position: sticky;
+      top: 1rem;
+      z-index: 10;
+      background-color: #D94F30; /* Burnt Sienna */
+      color: #F5E8C7; /* Creamy Beige */
+      padding: 0.5rem 1rem;
+      border-radius: 0.375rem;
+      text-align: center;
+      font-family: 'Bebas Neue', sans-serif;
+      text-decoration: none;
+      display: inline-block;
+      margin-bottom: 1rem;
+    }
+    .jump-button:hover {
+      background-color: #8A9A5B; /* Sage Green */
+    }
+    .action-button {
+      background-color: #8A9A5B; /* Sage Green */
+      color: #F5E8C7; /* Creamy Beige */
+      padding: 0.5rem 1rem;
+      border-radius: 0.375rem;
+      text-decoration: none;
+      margin-right: 0.5rem;
+      margin-bottom: 0.5rem;
+      font-family: 'Lora', serif;
+    }
+    .action-button:hover {
+      background-color: #D94F30; /* Burnt Sienna */
+    }
+    @media print {
+      .no-print {
+        display: none;
+      }
+      .recipe-card {
+        border: none;
+        padding: 0;
+      }
+    }
   </style>
 </head>
 <body>
@@ -99,41 +145,102 @@
 
   <!-- Main Content -->
   <main class="container mx-auto p-4">
+    <!-- Jump to Recipe Button -->
+    <a href="#recipe" class="jump-button no-print">Jump to Recipe</a>
+
     <h1 class="text-3xl mb-4 highlight">Prosciutto Salmon with Garlic Butter</h1>
-    <p class="text-[#333333] mb-6">A simple yet elegant dish with crispy prosciutto and rich garlic butter, perfect for a healthy family dinner.</p>
+    <p class="text-[#333333] mb-2">A simple yet elegant dish with crispy prosciutto and rich garlic butter, perfect for a healthy family dinner.</p>
+    <p class="text-[#333333] mb-6">Categories: <a href="/categories/dinner">Dinner</a>, <a href="/categories/seafood">Seafood</a></p>
 
     <!-- Recipe Image (Placeholder) -->
     <div class="mb-6">
       <img src="https://fitdadfeeds-static-site.s3.amazonaws.com/assets/prosciutto-salmon-with-garlic-butter.jpg" alt="Prosciutto Salmon with Garlic Butter" class="w-full h-64 object-cover rounded">
     </div>
 
-    <!-- Ingredients -->
+    <!-- Expanded Discussion -->
     <section class="mb-6">
-      <h2 class="text-xl mb-2">Ingredients</h2>
-      <ul class="list-disc list-inside text-[#333333]">
-        <li>4 salmon fillets (about 6 oz each)</li>
-        <li>4 slices of prosciutto</li>
-        <li>3 tbsp unsalted butter</li>
-        <li>3 cloves garlic, minced</li>
-        <li>1 tbsp olive oil</li>
-        <li>Salt and pepper to taste</li>
-        <li>Fresh parsley, chopped (for garnish)</li>
-        <li>Lemon wedges (for serving)</li>
-      </ul>
+      <h2 class="text-xl mb-2">A Quick and Healthy Dinner for Busy Families</h2>
+      <p class="text-[#333333] mb-4">
+        At *FitDadFeeds*, we’re passionate about creating meals that fit into the busy lives of parents while keeping health and flavor at the forefront. This *Prosciutto Salmon with Garlic Butter* is a perfect example—a wholesome dinner that comes together in under 25 minutes. With just a handful of clean ingredients, you can serve a protein-packed, low-carb meal that’s rich in healthy fats, making it ideal for keeping your family energized and happy. It’s a go-to recipe for those hectic weeknights when you want something nutritious without the hassle.
+      </p>
+
+      <h3 class="text-lg mb-2">The FitDadFeeds Ethos: Clean Ingredients Matter</h3>
+      <p class="text-[#333333] mb-4">
+        We believe in using whole, minimally processed ingredients to create meals that nourish without compromise. That’s why this recipe features wild-caught Alaskan sockeye salmon, which is higher in omega-3 fatty acids and lower in contaminants compared to farm-raised options. Omega-3s support heart health and reduce inflammation, making this a great choice for active families. We also use prosciutto free of nitrates and artificial preservatives—just pork and salt—to ensure a clean, savory addition to the dish. For the garlic butter, we stick to unsalted butter and fresh garlic, avoiding the soybean oil and additives often found in store-bought spreads. At *FitDadFeeds*, we encourage making your own garlic butter—it’s simple, clean, and lets you control the quality of every ingredient.
+      </p>
+
+      <h3 class="text-lg mb-2">Why Wild-Caught Salmon Is Best for Your Family</h3>
+      <p class="text-[#333333] mb-4">
+        Choosing wild-caught salmon isn’t just about flavor—it’s about health. Wild Alaskan sockeye salmon, like the kind we use in this recipe, is packed with omega-3s, which are essential for brain development in kids and overall wellness for adults. It’s also lower in pollutants than farm-raised salmon, aligning with our commitment to clean eating. When shopping, look for fillets that are bright pink or orange with a firm texture, and avoid any that smell fishy or look dull. If you can, opt for sustainably sourced salmon to support ethical fishing practices—a small choice that makes a big difference.
+      </p>
+
+      <h3 class="text-lg mb-2">Pairing Ideas to Complete the Meal</h3>
+      <p class="text-[#333333] mb-4">
+        This salmon pairs beautifully with a variety of sides, making it versatile for any family dinner. We love serving it with steamed asparagus or roasted potatoes for a hearty meal, but my family’s favorite is organic pasta—it’s a kid-friendly option that still keeps the meal clean and wholesome. For a lighter option, try a fresh green salad with olive oil and lemon dressing. If you’re meal prepping, make extra and store the leftovers in an airtight container—they’re just as delicious the next day for a quick lunch.
+      </p>
     </section>
 
-    <!-- Instructions -->
-    <section class="mb-6">
-      <h2 class="text-xl mb-2">Instructions</h2>
-      <ol class="list-decimal list-inside text-[#333333]">
-        <li>Preheat your oven to 400°F (200°C).</li>
-        <li>Pat the salmon fillets dry with a paper towel and season with salt and pepper.</li>
-        <li>Wrap each salmon fillet with a slice of prosciutto, tucking the ends underneath.</li>
-        <li>In a large oven-safe skillet, heat olive oil over medium-high heat. Place the salmon fillets prosciutto-side down and sear for 2-3 minutes until the prosciutto is crispy.</li>
-        <li>Flip the salmon and add butter and minced garlic to the skillet. Spoon the garlic butter over the salmon as it melts, cooking for another 1-2 minutes.</li>
-        <li>Transfer the skillet to the preheated oven and bake for 5-7 minutes, or until the salmon is cooked to your desired doneness (internal temperature of 145°F/63°C for medium).</li>
-        <li>Remove from the oven, garnish with chopped parsley, and serve with lemon wedges on the side.</li>
+    <!-- Recipe Card -->
+    <section id="recipe" class="recipe-card">
+      <h2 class="text-xl mb-2">Prosciutto Salmon with Garlic Butter Recipe</h2>
+
+      <!-- Quick Info -->
+      <div class="mb-4">
+        <p class="text-[#333333]"><strong>Prep Time:</strong> 5 minutes</p>
+        <p class="text-[#333333]"><strong>Cook Time:</strong> 17 minutes</p>
+        <p class="text-[#333333]"><strong>Total Time:</strong> 22 minutes</p>
+        <p class="text-[#333333]"><strong>Servings:</strong> 2</p>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="mb-4 no-print">
+        <a href="javascript:window.print()" class="action-button">Print Recipe</a>
+        <a href="https://pinterest.com/pin/create/button/?url=https://www.fitdadfeeds.com/recipes/prosciutto-salmon-with-garlic-butter&media=https://fitdadfeeds-static-site.s3.amazonaws.com/assets/prosciutto-salmon-with-garlic-butter.jpg&description=Try this delicious Prosciutto Salmon with Garlic Butter recipe from FitDadFeeds!" class="action-button" target="_blank">Share on Pinterest</a>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=https://www.fitdadfeeds.com/recipes/prosciutto-salmon-with-garlic-butter" class="action-button" target="_blank">Share on Facebook</a>
+        <a href="sms:?body=Check out this Prosciutto Salmon with Garlic Butter recipe from FitDadFeeds! https://www.fitdadfeeds.com/recipes/prosciutto-salmon-with-garlic-butter" class="action-button">Share via Text</a>
+        <a href="mailto:?subject=Prosciutto Salmon with Garlic Butter Recipe&body=Hi! I found this great recipe on FitDadFeeds: Prosciutto Salmon with Garlic Butter. Check it out: https://www.fitdadfeeds.com/recipes/prosciutto-salmon-with-garlic-butter" class="action-button">Share via Email</a>
+      </div>
+
+      <!-- Ingredients -->
+      <h3 class="text-lg mb-2">Ingredients</h3>
+      <h4 class="text-md mb-1">For the Salmon Filets:</h4>
+      <ul class="list-disc list-inside text-[#333333] mb-2">
+        <li>8 oz raw wild-caught Alaskan sockeye salmon (two 4-oz fillets)</li>
+        <li>1/4 tsp salt</li>
+        <li>1/8 tsp ground black pepper</li>
+        <li>1/4 tsp onion powder</li>
+        <li>1/4 tsp crushed red pepper (optional)</li>
+        <li>2 slices prosciutto (nitrate-free, just pork and salt)</li>
+      </ul>
+      <h4 class="text-md mb-1">For the Garlic Butter Sauce:</h4>
+      <ul class="list-disc list-inside text-[#333333] mb-4">
+        <li>1 1/2 tbsp unsalted butter</li>
+        <li>1 tsp minced garlic</li>
+        <li>1 tsp fresh lemon juice</li>
+      </ul>
+
+      <!-- Instructions -->
+      <h3 class="text-lg mb-2">Instructions</h3>
+      <ol class="list-decimal list-inside text-[#333333] mb-4">
+        <li>Preheat your oven to 375°F (190°C).</li>
+        <li>Lay the 4-oz salmon fillets on a flat surface and pat dry with a paper towel. Season with the salt, pepper, onion powder, and crushed red pepper (if using).</li>
+        <li>Place the salmon on a sheet tray lined with parchment paper. Lay a slice of prosciutto over each fillet—you don’t need to tuck the prosciutto under the salmon.</li>
+        <li>Bake the salmon for 16–17 minutes, until it flakes easily with a fork (internal temperature of 145°F/63°C for medium). Set aside to cool slightly.</li>
+        <li>During the final minutes of baking, make the garlic butter sauce. Melt the butter in a small pan over low heat, then stir in the garlic and lemon juice. Cook until the butter turns lightly golden and the garlic gives off a nutty aroma, about 1–2 minutes.</li>
+        <li>Arrange the salmon on a serving dish and drizzle the garlic butter sauce over each fillet with a spoon.</li>
       </ol>
+
+      <!-- Recipe Notes -->
+      <h3 class="text-lg mb-2">Recipe Notes</h3>
+      <p class="text-[#333333] mb-4">
+        This dish pairs well with many sides, including steamed asparagus, roasted potatoes, or my family’s favorite—organic pasta! For the cleanest option, choose pasta made from 100% durum wheat semolina with no additives.
+      </p>
+
+      <!-- Substitution Tips -->
+      <h3 class="text-lg mb-2">Substitution Tips</h3>
+      <p class="text-[#333333] mb-4">
+        If you don’t have unsalted butter, you can use ghee from a grass-fed source—just avoid store-bought spreads with seed oils or additives. For a milder flavor, reduce the garlic to 1/2 tsp and adjust the lemon juice to taste.
+      </p>
     </section>
   </main>
 
