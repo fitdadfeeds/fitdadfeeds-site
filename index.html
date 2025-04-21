@@ -126,6 +126,7 @@
       <h2 class="text-xl mb-4">Featured Recipe</h2>
       <div class="bg-white p-4 rounded shadow">
         <h3 class="text-lg highlight">Prosciutto Salmon with Garlic Butter</h3>
+        <p class="text-[#333333] mb-2">Categories: <a href="/categories/dinner" class="text-[#D94F30] hover:text-[#8A9A5B]">Dinner</a>, <a href="/categories/seafood" class="text-[#D94F30] hover:text-[#8A9A5B]">Seafood</a></p>
         <p class="text-[#333333] mb-2">A simple yet elegant dish with crispy prosciutto and rich garlic butter, perfect for a healthy family dinner.</p>
         <a href="/recipes/prosciutto-salmon-with-garlic-butter" class="highlight hover:underline">View Recipe</a>
       </div>
@@ -139,9 +140,10 @@
     <!-- Recipe Categories -->
     <section>
       <h2 class="text-xl mb-4">Explore Categories</h2>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
         <a href="/categories/breakfast" class="category-card p-4 rounded shadow text-center text-[#333333] hover:text-[#D94F30]">Breakfast</a>
         <a href="/categories/dinner" class="category-card p-4 rounded shadow text-center text-[#333333] hover:text-[#D94F30]">Dinner</a>
+        <a href="/categories/seafood" class="category-card p-4 rounded shadow text-center text-[#333333] hover:text-[#D94F30]">Seafood</a>
         <a href="/categories/sides" class="category-card p-4 rounded shadow text-center text-[#333333] hover:text-[#D94F30]">Sides</a>
       </div>
     </section>
@@ -155,9 +157,9 @@
   <!-- JavaScript for Search Functionality -->
   <script>
     const recipes = [
-      { title: "Prosciutto Salmon with Garlic Butter", url: "/recipes/prosciutto-salmon-with-garlic-butter", description: "A simple yet elegant dish with crispy prosciutto and rich garlic butter, perfect for a healthy family dinner." },
-      { title: "Turkey and Quinoa Stuffed Peppers", url: "/recipes/turkey-quinoa-stuffed-peppers", description: "Flavorful bell peppers stuffed with lean turkey and quinoa, a nutritious dinner option." },
-      { title: "Sweet Potato Breakfast Hash", url: "/recipes/sweet-potato-breakfast-hash", description: "A savory breakfast hash with sweet potatoes and fresh herbs, great for a healthy start." }
+      { title: "Prosciutto Salmon with Garlic Butter", url: "/recipes/prosciutto-salmon-with-garlic-butter", categories: ["Dinner", "Seafood"], description: "A simple yet elegant dish with crispy prosciutto and rich garlic butter, perfect for a healthy family dinner." },
+      { title: "Turkey and Quinoa Stuffed Peppers", url: "/recipes/turkey-quinoa-stuffed-peppers", categories: ["Dinner"], description: "Flavorful bell peppers stuffed with lean turkey and quinoa, a nutritious dinner option." },
+      { title: "Sweet Potato Breakfast Hash", url: "/recipes/sweet-potato-breakfast-hash", categories: ["Breakfast"], description: "A savory breakfast hash with sweet potatoes and fresh herbs, great for a healthy start." }
     ];
 
     const searchInput = document.getElementById('searchInput');
@@ -182,8 +184,10 @@
       filteredRecipes.forEach(recipe => {
         const resultDiv = document.createElement('div');
         resultDiv.className = 'search-result';
+        const categoryLinks = recipe.categories.map(cat => `<a href="/categories/${cat.toLowerCase()}" class="text-[#D94F30] hover:text-[#8A9A5B]">${cat}</a>`).join(', ');
         resultDiv.innerHTML = `
           <h3 class="text-lg font-semibold">${recipe.title}</h3>
+          <p class="text-[#333333] mb-2">Categories: ${categoryLinks}</p>
           <p class="text-[#333333] mb-2">${recipe.description}</p>
           <a href="${recipe.url}" class="highlight hover:underline">View Recipe</a>
         `;
