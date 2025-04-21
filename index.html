@@ -128,6 +128,7 @@
         <h3 class="text-lg highlight">Prosciutto Salmon with Garlic Butter</h3>
         <p class="text-[#333333] mb-2">Categories: <a href="/categories/dinner" class="text-[#D94F30] hover:text-[#8A9A5B]">Dinner</a>, <a href="/categories/seafood" class="text-[#D94F30] hover:text-[#8A9A5B]">Seafood</a></p>
         <p class="text-[#333333] mb-2">A simple yet elegant dish with crispy prosciutto and rich garlic butter, perfect for a healthy family dinner.</p>
+        <p class="text-[#333333] mb-2">Related Recipes: Looking for more seafood dinners? Check out our upcoming <a href="/recipes/lemon-garlic-shrimp" class="text-[#D94F30] hover:text-[#8A9A5B]">Lemon Garlic Shrimp</a> recipe!</p>
         <a href="/recipes/prosciutto-salmon-with-garlic-butter" class="highlight hover:underline">View Recipe</a>
       </div>
     </section>
@@ -185,10 +186,15 @@
         const resultDiv = document.createElement('div');
         resultDiv.className = 'search-result';
         const categoryLinks = recipe.categories.map(cat => `<a href="/categories/${cat.toLowerCase()}" class="text-[#D94F30] hover:text-[#8A9A5B]">${cat}</a>`).join(', ');
+        let relatedRecipes = '';
+        if (recipe.title === "Prosciutto Salmon with Garlic Butter") {
+          relatedRecipes = 'Looking for more seafood dinners? Check out our upcoming <a href="/recipes/lemon-garlic-shrimp" class="text-[#D94F30] hover:text-[#8A9A5B]">Lemon Garlic Shrimp</a> recipe!';
+        }
         resultDiv.innerHTML = `
           <h3 class="text-lg font-semibold">${recipe.title}</h3>
           <p class="text-[#333333] mb-2">Categories: ${categoryLinks}</p>
           <p class="text-[#333333] mb-2">${recipe.description}</p>
+          ${relatedRecipes ? `<p class="text-[#333333] mb-2">Related Recipes: ${relatedRecipes}</p>` : ''}
           <a href="${recipe.url}" class="highlight hover:underline">View Recipe</a>
         `;
         searchResults.appendChild(resultDiv);
