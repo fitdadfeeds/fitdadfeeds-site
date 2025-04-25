@@ -1,0 +1,330 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="FitDad’s clean Restaurant Teriyaki Sauce recipe. Glaze chicken, salmon, or veggies with real ingredients, no processed mess!">
+    <meta name="keywords" content="teriyaki sauce, clean eating, healthy sauces, family-friendly recipes, FitDadFeeds">
+    <meta name="author" content="FitDadFeeds">
+    <title>Restaurant Teriyaki Sauce - FitDadFeeds</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@900&family=Bebas+Neue&family=Lora&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="icon" href="https://fitdadfeeds-static-site.s3.amazonaws.com/assets/favicon.png">
+    <style>
+        body {
+            background-color: #F5E8C7;
+            color: #333333;
+            font-family: 'Lora', serif;
+        }
+        h1, h2, h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 900;
+            color: #333333;
+        }
+        .highlight {
+            font-family: 'Bebas Neue', sans-serif;
+            color: #D94F30;
+        }
+        .nav-link {
+            color: #F5E8C7;
+        }
+        .nav-link:hover {
+            color: #D94F30;
+        }
+        a {
+            color: #D94F30;
+        }
+        a:hover {
+            color: #8A9A5B;
+        }
+        .recipe-card {
+            background-color: #FFFFFF;
+            border: 2px solid #8A9A5B;
+            border-radius: 8px;
+            padding: 1.5rem;
+        }
+        .jump-button {
+            position: sticky;
+            top: 1rem;
+            z-index: 10;
+            background-color: #D94F30;
+            color: #F5E8C7;
+            font-family: 'Bebas Neue', sans-serif;
+            border-radius: 0.5rem;
+            width: auto;
+            display: inline-block;
+        }
+        .jump-button:hover {
+            background-color: #8A9A5B;
+        }
+        .action-button {
+            background-color: #8A9A5B;
+            color: #F5E8C7;
+            font-family: 'Lora', serif;
+            border-radius: 0.5rem;
+        }
+        .action-button:hover {
+            background-color: #D94F30;
+        }
+        .no-print {
+            display: block;
+        }
+        @media print {
+            .no-print {
+                display: none;
+            }
+            .recipe-card {
+                border: none;
+                padding: 0;
+            }
+        }
+    </style>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Recipe",
+        "name": "Restaurant Teriyaki Sauce",
+        "image": "https://fitdadfeeds-static-site.s3.amazonaws.com/assets/restaurant-teriyaki-sauce.jpg",
+        "author": {
+            "@type": "Person",
+            "name": "FitDadFeeds"
+        },
+        "datePublished": "2025-04-24",
+        "description": "FitDad’s clean, homemade Restaurant Teriyaki Sauce is perfect for glazing chicken, salmon, or veggies with real ingredients, no processed mess!",
+        "prepTime": "PT5M",
+        "cookTime": "PT5M",
+        "totalTime": "PT10M",
+        "recipeYield": "1.5 cups",
+        "recipeCuisine": "Japanese",
+        "recipeCategory": "Sauce",
+        "keywords": "teriyaki sauce, clean eating, healthy sauces, FitDadFeeds",
+        "nutrition": {
+            "@type": "NutritionInformation",
+            "calories": "40 kcal",
+            "carbohydrateContent": "9 g",
+            "proteinContent": "1 g",
+            "fatContent": "0 g",
+            "servingSize": "2 tbsp"
+        },
+        "recipeIngredient": [
+            "1/4 cup soy sauce (tamari or coconut aminos for a cleaner option)",
+            "1 cup water",
+            "1/2 tsp ground ginger",
+            "1/4 tsp garlic powder",
+            "5 tbsp packed brown sugar (organic preferred)",
+            "1 tbsp honey (raw, unfiltered)",
+            "2 tbsp cornstarch (optional, for thickness)",
+            "1/4 cup cold water"
+        ],
+        "recipeInstructions": [
+            {
+                "@type": "HowToStep",
+                "text": "Mix soy sauce, 1 cup water, ground ginger, garlic powder, brown sugar, and honey in a saucepan over medium heat."
+            },
+            {
+                "@type": "HowToStep",
+                "text": "Stir until the mixture begins to simmer."
+            },
+            {
+                "@type": "HowToStep",
+                "text": "If using cornstarch, mix it with 1/4 cup cold water in a cup until dissolved."
+            },
+            {
+                "@type": "HowToStep",
+                "text": "Once the sauce is simmering, whisk in the cornstarch mixture and heat until the sauce thickens to your desired consistency, about 1-2 minutes."
+            },
+            {
+                "@type": "HowToStep",
+                "text": "If the sauce gets too thick, add a little more water to thin it out."
+            }
+        ],
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.8",
+            "ratingCount": "25"
+        },
+        "video": {
+            "@type": "VideoObject",
+            "name": "How to Make Restaurant Teriyaki Sauce",
+            "description": "Watch this step-by-step video to make FitDad’s clean Restaurant Teriyaki Sauce at home.",
+            "thumbnailUrl": "https://fitdadfeeds-static-site.s3.amazonaws.com/assets/restaurant-teriyaki-sauce-thumb.jpg",
+            "contentUrl": "https://www.instagram.com/reel/your-reel-id",
+            "embedUrl": "https://www.instagram.com/reel/your-reel-id/embed",
+            "uploadDate": "2025-04-24",
+            "duration": "PT3M"
+        }
+    }
+    </script>
+</head>
+<body>
+    <header class="bg-gray-800 no-print">
+        <nav class="container mx-auto p-4 flex items-center justify-between relative z-20">
+            <div class="flex items-center relative z-30" style="background: transparent !important;">
+                <a href="/" class="flex items-center">
+                    <img src="https://fitdadfeeds-static-site.s3.amazonaws.com/assets/fitdadfeeds-logo.png" alt="FitDadFeeds Logo" class="h-10 sm:h-12">
+                    <h1 class="text-xl sm:text-2xl !text-f5e8c7 text-opacity-100 ml-4 font-lora hover:text-f5e8c7 relative z-40" style="color: #F5E8C7 !important;">FitDadFeeds</h1>
+                </a>
+            </div>
+            <div class="flex space-x-4">
+                <a href="/" class="nav-link font-lora">Home</a>
+                <a href="/categories.html" class="nav-link font-lora">Categories</a>
+                <a href="/about.html" class="nav-link font-lora">About</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div class="inline-block">
+            <a href="#recipe" class="jump-button inline-block px-4 py-2 mb-4 text-base max-w-max no-print">Jump to Recipe</a>
+        </div>
+        <h1 class="highlight text-4xl mb-4">Restaurant Teriyaki Sauce</h1>
+        <p class="text-gray-800 mb-4">This clean, homemade Restaurant Teriyaki Sauce is a game-changer for my gang. It’s perfect for glazing chicken, salmon, or veggies with real ingredients—no processed mess allowed!</p>
+        <p class="mb-4">Categories: <a href="/categories/sauces.html">Sauces</a></p>
+        <img src="https://fitdadfeeds-static-site.s3.amazonaws.com/assets/restaurant-teriyaki-sauce.jpg" alt="Restaurant Teriyaki Sauce" class="w-full h-64 object-cover rounded mb-4">
+
+        <section class="video-section text-center mb-8 no-print">
+            <h2 class="highlight text-2xl mb-2">Watch the Recipe</h2>
+            <p class="text-gray-800 mb-4">See how to make this clean Restaurant Teriyaki Sauce in action!</p>
+            <div class="max-w-md mx-auto">
+                <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/your-reel-id" data-instgrm-version="14"></blockquote>
+                <script async src="//www.instagram.com/embed.js"></script>
+            </div>
+        </section>
+
+        <section class="mb-8">
+            <h2 class="text-2xl mb-4">About This Clean Teriyaki Sauce</h2>
+            <p class="text-gray-800 mb-4">At FitDadFeeds, I’m all about feeding my gang with real, clean ingredients—no fake stuff allowed. This Restaurant Teriyaki Sauce is a must-have for busy dads who want to level up their family’s meals without sacrificing health. As a bodybuilder and dad of six, I’ve perfected this recipe to deliver bold, restaurant-quality flavor in just 10 minutes. It’s all about real ingredients and no processed mess, so you can feel good about what you’re serving your tribe.</p>
+            
+            <h3 class="text-xl mb-2">Why Homemade Matters</h3>
+            <p class="text-gray-800 mb-4">Store-bought teriyaki sauces are often packed with nasties—high-fructose corn syrup, artificial flavors, and preservatives. That’s not how I roll. Making your own clean teriyaki sauce means you control every ingredient, ensuring it’s free of the bad stuff. This recipe uses tamari or coconut aminos, organic brown sugar, and raw honey for a sauce that’s as wholesome as it is delicious. It’s quick, simple, and lets you take charge of your family’s health like a true leader.</p>
+            
+            <h3 class="text-xl mb-2">Tips for the Cleanest Ingredients</h3>
+            <p class="text-gray-800 mb-4">To keep this sauce clean, check your labels. For soy sauce, choose tamari or coconut aminos with just soybeans, water, and salt—avoid brands with additives. Organic brown sugar keeps processed junk out, and raw, unfiltered honey adds natural sweetness with health benefits. I use ground ginger and garlic powder for convenience, but fresh works too if you’ve got the time. These choices align with my clean-eating ethos and make this sauce a win for your fam.</p>
+            
+            <h3 class="text-xl mb-2">How to Use This Sauce</h3>
+            <p class="text-gray-800 mb-4">This Restaurant Teriyaki Sauce is versatile enough to elevate any meal. Glaze grilled salmon or chicken, use it as a marinade for steak, or toss it with stir-fried veggies. My gang goes hard for it over grilled salmon with a side of steamed broccoli—perfect for a quick family dinner. Skip the cornstarch if marinating to let the flavors soak in better. Make a double batch and store it in the fridge for up to a week to simplify meal prep. Try it with our <a href="/recipes/prosciutto-salmon-with-garlic-butter.html">Prosciutto Salmon with Garlic Butter</a> for a next-level meal!</p>
+        </section>
+
+        <section id="recipe" class="recipe-card">
+            <h2 class="highlight text-2xl mb-2">Restaurant Teriyaki Sauce</h2>
+            <div class="mb-4">
+                <h3 class="text-xl mb-2">Quick Info</h3>
+                <p class="text-gray-800"><strong>Prep Time:</strong> 5 minutes</p>
+                <p class="text-gray-800"><strong>Cook Time:</strong> 5 minutes</p>
+                <p class="text-gray-800"><strong>Total Time:</strong> 10 minutes</p>
+                <p class="text-gray-800"><strong>Yield:</strong> 1.5 cups</p>
+            </div>
+            <div class="flex space-x-2 mb-4 no-print">
+                <button onclick="window.print()" class="action-button px-4 py-2">Print Recipe</button>
+                <a href="https://www.pinterest.com/pin/create/button/?url=https://www.fitdadfeeds.com/recipes/restaurant-teriyaki-sauce.html&media=https://fitdadfeeds-static-site.s3.amazonaws.com/assets/restaurant-teriyaki-sauce.jpg&description=Try this clean Restaurant Teriyaki Sauce recipe from FitDadFeeds!" class="action-button px-4 py-2">Share on Pinterest</a>
+                <a href="https://www.facebook.com/sharer/sharer.php?u=https://www.fitdadfeeds.com/recipes/restaurant-teriyaki-sauce.html" class="action-button px-4 py-2">Share on Facebook</a>
+                <a href="sms:?body=Check out this clean Restaurant Teriyaki Sauce recipe from FitDadFeeds: https://www.fitdadfeeds.com/recipes/restaurant-teriyaki-sauce.html" class="action-button px-4 py-2">Share via Text</a>
+                <a href="mailto:?subject=Restaurant Teriyaki Sauce Recipe&body=Check out this clean recipe from FitDadFeeds: https://www.fitdadfeeds.com/recipes/restaurant-teriyaki-sauce.html" class="action-button px-4 py-2">Share via Email</a>
+            </div>
+            <h3 class="text-xl mb-2">Ingredients</h3>
+            <ul class="list-disc pl-6 text-gray-800 mb-4">
+                <li>1/4 cup soy sauce (tamari or coconut aminos for a cleaner option)</li>
+                <li>1 cup water</li>
+                <li>1/2 tsp ground ginger</li>
+                <li>1/4 tsp garlic powder</li>
+                <li>5 tbsp packed brown sugar (organic preferred)</li>
+                <li>1 tbsp honey (raw, unfiltered)</li>
+                <li>2 tbsp cornstarch (optional, for thickness)</li>
+                <li>1/4 cup cold water</li>
+            </ul>
+            <h3 class="text-xl mb-2">Instructions</h3>
+            <ol class="list-decimal pl-6 text-gray-800 mb-4">
+                <li>Mix soy sauce, 1 cup water, ground ginger, garlic powder, brown sugar, and honey in a saucepan over medium heat.</li>
+                <li>Stir until the mixture begins to simmer.</li>
+                <li>If using cornstarch, mix it with 1/4 cup cold water in a cup until dissolved.</li>
+                <li>Once the sauce is simmering, whisk in the cornstarch mixture and heat until the sauce thickens to your desired consistency, about 1-2 minutes.</li>
+                <li>If the sauce gets too thick, add a little more water to thin it out.</li>
+            </ol>
+            <h3 class="text-xl mb-2">Recipe Notes</h3>
+            <p class="text-gray-800 mb-4">For a thicker glaze, use the cornstarch; skip it for a smoother marinade to let the flavors soak in better. Choose tamari or coconut aminos for a soy sauce with no bad stuff. Organic brown sugar avoids processed additives, and raw, unfiltered honey keeps it clean. Adjust sweetness with extra honey if your tribe likes it sweeter. This is how I roll—real ingredients only!</p>
+            <h3 class="text-xl mb-2">Substitution Tips</h3>
+            <ul class="list-disc pl-6 text-gray-800 mb-4">
+                <li>Swap tamari for coconut aminos for a soy-free option—no nasties allowed.</li>
+                <li>Use maple syrup instead of honey for a vegan version that’s still clean.</li>
+            </ul>
+            <h3 class="text-xl mb-2">Nutrition (Per 2 Tbsp Serving, Estimated)</h3>
+            <ul class="list-disc pl-6 text-gray-800 mb-4">
+                <li>Calories: 40 kcal</li>
+                <li>Carbs: 9 g</li>
+                <li>Protein: 1 g</li>
+                <li>Fat: 0 g</li>
+            </ul>
+            <h3 class="text-xl mb-2">Related Recipes</h3>
+            <ul class="list-disc pl-6 text-gray-800">
+                <li><a href="/recipes/prosciutto-salmon-with-garlic-butter.html">Prosciutto Salmon with Garlic Butter</a></li>
+            </ul>
+        </section>
+
+        <div class="no-print">
+            <h3 class="text-xl mb-2">Share Your Creation!</h3>
+            <input type="file" id="imageUpload" accept="image/*" class="mb-2">
+            <img id="uploadedImage" alt="Uploaded Teriyaki Sauce Image" class="max-w-full h-auto hidden">
+        </div>
+    </main>
+
+    <footer class="bg-gray-800 text-f5e8c7 text-center py-4 no-print">
+        <p>© 2025 FitDadFeeds. All rights reserved.</p>
+    </footer>
+
+    <script>
+        const imageUpload = document.getElementById('imageUpload');
+        const uploadedImage = document.getElementById('uploadedImage');
+        imageUpload.addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    uploadedImage.src = e.target.result;
+                    uploadedImage.classList.remove('hidden');
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    </script>
+</body>
+</html>
