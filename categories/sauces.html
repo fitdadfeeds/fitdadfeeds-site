@@ -135,5 +135,12 @@
     <footer class="bg-gray-800 text-f5e8c7 text-center py-4 no-print">
         <p>© 2025 FitDadFeeds. All rights reserved.</p>
     </footer>
+
+    <script>
+        // Normalize URLs to prevent trailing slashes
+        document.querySelectorAll('a[href*="/recipes/restaurant-teriyaki-sauce"]').forEach(link => {
+            link.href = '/recipes/restaurant-teriyaki-sauce.html';
+        });
+    </script>
 </body>
 </html>
