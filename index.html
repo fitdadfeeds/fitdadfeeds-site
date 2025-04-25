@@ -2,6 +2,9 @@
         var gk_isXlsx = false;
         var gk_xlsxFileLookup = {};
         var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
         function loadFileData(filename) {
         if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
             try {
@@ -12,12 +15,19 @@
                 // Convert sheet to JSON to filter blank rows
                 var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
                 // Filter out blank rows (rows where all cells are empty, null, or undefined)
-                var filteredData = jsonData.filter(row =>
-                    row.some(cell => cell !== '' && cell !== null && cell !== undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
                 );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
 
                 // Convert filtered JSON back to CSV
-                var csv = XLSX.utils.aoa_to_sheet(filteredData); // Create a new sheet from filtered array of arrays
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
                 csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
                 return csv;
             } catch (e) {
@@ -30,216 +40,95 @@
         </script><!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Healthy, family-friendly recipes from FitDadFeeds. Clean eating with whole ingredients!">
-  <meta name="keywords" content="healthy recipes, clean eating, family meals, FitDadFeeds">
-  <meta name="author" content="FitDadFeeds">
-  <title>FitDadFeeds - Healthy Family Recipes</title>
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@900&family=Bebas+Neue&family=Lora&display=swap" rel="stylesheet">
-  <link rel="icon" type="image/png" href="https://fitdadfeeds-static-site.s3.amazonaws.com/assets/favicon.png">
-  <style>
-    body {
-      background-color: #F5E8C7; /* Creamy Beige */
-      color: #333333; /* Charcoal Gray */
-      font-family: 'Lora', serif;
-    }
-    h1, h2, h3 {
-      font-family: 'Montserrat', sans-serif;
-      font-weight: 900;
-      color: #333333; /* Charcoal Gray */
-    }
-    .highlight {
-      font-family: 'Bebas Neue', sans-serif;
-      color: #D94F30; /* Burnt Sienna */
-    }
-    .nav-link {
-      font-family: 'Lora', serif;
-      color: #F5E8C7; /* Creamy Beige */
-    }
-    .nav-link:hover {
-      color: #D94F30; /* Burnt Sienna */
-    }
-    .category-card {
-      background-color: #FFFFFF;
-      border: 1px solid #8A9A5B; /* Sage Green */
-      transition: transform 0.2s;
-    }
-    .category-card:hover {
-      transform: scale(1.05);
-    }
-    .header-link {
-      text-decoration: none;
-      color: #F5E8C7; /* Creamy Beige */
-    }
-    .header-link:hover {
-      color: #D94F30; /* Burnt Sienna */
-    }
-    .search-result {
-      background-color: #FFFFFF;
-      border: 1px solid #8A9A5B; /* Sage Green */
-      padding: 1rem;
-      margin-top: 0.5rem;
-      border-radius: 0.375rem;
-    }
-    .search-result a {
-      color: #D94F30; /* Burnt Sienna */
-      text-decoration: none;
-    }
-    .search-result a:hover {
-      text-decoration: underline;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="FitDadFeeds: Healthy, clean recipes for busy dads. Real ingredients, no nasties, perfect for your squad!">
+    <meta name="keywords" content="healthy recipes, clean eating, family-friendly meals, FitDadFeeds">
+    <meta name="author" content="FitDadFeeds">
+    <title>FitDadFeeds - Healthy Family Recipes</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@900&family=Bebas+Neue&family=Lora&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="icon" href="https://fitdadfeeds-static-site.s3.amazonaws.com/assets/favicon.png">
+    <style>
+        body {
+            background-color: #F5E8C7;
+            color: #333333;
+            font-family: 'Lora', serif;
+        }
+        h1, h2, h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 900;
+            color: #333333;
+        }
+        .highlight {
+            font-family: 'Bebas Neue', sans-serif;
+            color: #D94F30;
+        }
+        .nav-link {
+            color: #F5E8C7;
+        }
+        .nav-link:hover {
+            color: #D94F30;
+        }
+        a {
+            color: #D94F30;
+        }
+        a:hover {
+            color: #8A9A5B;
+        }
+        .recipe-card {
+            background-color: #FFFFFF;
+            border: 2px solid #8A9A5B;
+            border-radius: 8px;
+            padding: 1.5rem;
+        }
+        .no-print {
+            display: block;
+        }
+        @media print {
+            .no-print {
+                display: none;
+            }
+        }
+    </style>
 </head>
 <body>
-  <!-- Header -->
-  <header class="bg-gray-800 p-4">
-    <div class="container mx-auto flex flex-wrap items-center justify-between">
-      <div class="flex items-center space-x-4">
-        <!-- Logo -->
-        <a href="/" class="flex-shrink-0">
-          <img src="https://fitdadfeeds-static-site.s3.amazonaws.com/assets/fitdadfeeds-logo.png" alt="FitDadFeeds Logo" class="h-10 sm:h-12">
-        </a>
-        <a href="/" class="header-link">
-          <h1 class="text-xl sm:text-2xl" style="color: #F5E8C7;">FitDadFeeds</h1>
-        </a>
-      </div>
-      <nav class="mt-2 sm:mt-0 flex space-x-2 sm:space-x-4">
-        <a href="/" class="nav-link px-2 text-sm sm:text-base">Home</a>
-        <a href="/categories" class="nav-link px-2 text-sm sm:text-base">Categories</a>
-        <a href="/about" class="nav-link px-2 text-sm sm:text-base">About</a>
-      </nav>
-    </div>
-  </header>
+    <header class="bg-gray-800 no-print">
+        <nav class="container mx-auto p-4 flex items-center justify-between relative z-20">
+            <div class="flex items-center relative z-30" style="background: transparent !important;">
+                <a href="/" class="flex items-center">
+                    <img src="https://fitdadfeeds-static-site.s3.amazonaws.com/assets/fitdadfeeds-logo.png" alt="FitDadFeeds Logo" class="h-10 sm:h-12">
+                    <h1 class="text-xl sm:text-2xl !text-f5e8c7 text-opacity-100 ml-4 font-lora hover:text-f5e8c7 relative z-40" style="color: #F5E8C7 !important;">FitDadFeeds</h1>
+                </a>
+            </div>
+            <div class="flex space-x-4">
+                <a href="/" class="nav-link font-lora">Home</a>
+                <a href="/categories.html" class="nav-link font-lora">Categories</a>
+                <a href="/about.html" class="nav-link font-lora">About</a>
+            </div>
+        </nav>
+    </header>
 
-  <!-- Main Content -->
-  <main class="container mx-auto p-4">
-    <!-- Search Bar -->
-    <div class="mb-6">
-      <input type="text" id="searchInput" placeholder="Search recipes..." class="w-full p-2 rounded border border-gray-300 focus:outline-none focus:border-[#8A9A5B]">
-      <div id="searchResults" class="mt-2"></div>
-    </div>
+    <main class="container mx-auto p-4">
+        <h1 class="highlight text-4xl mb-4">Healthy Recipes for Your Squad</h1>
+        <p class="text-gray-800 mb-4">Welcome to FitDadFeeds, where I share clean, healthy recipes for busy dads. As a bodybuilder and dad of six, I’m all about real ingredients—no nasties allowed. Fuel your tribe with meals that are simple, delicious, and good for you!</p>
+        
+        <section class="mb-8">
+            <h2 class="text-2xl mb-4">Featured Recipes</h2>
+            <div class="recipe-card mb-4">
+                <h3 class="text-xl mb-2">Restaurant Teriyaki Sauce</h3>
+                <img src="https://fitdadfeeds-static-site.s3.amazonaws.com/assets/restaurant-teriyaki-sauce.jpg" alt="Restaurant Teriyaki Sauce" class="w-full h-48 object-cover rounded mb-4">
+                <p class="text-gray-800 mb-4">A clean, homemade teriyaki sauce perfect for glazing chicken, salmon, or veggies. My gang loves it—no processed mess here!</p>
+                <p class="text-gray-800 mb-4"><strong>Prep Time:</strong> 5 minutes | <strong>Cook Time:</strong> 5 minutes | <strong>Yield:</strong> 1.5 cups</p>
+                <a href="/recipes/restaurant-teriyaki-sauce.html" class="text-d94f30 hover:text-8a9a5b font-lora">View Recipe</a>
+            </div>
+            <!-- Add more featured recipes as they are created -->
+        </section>
+    </main>
 
-    <!-- Featured Recipe -->
-    <section class="mb-8">
-      <h2 class="text-xl mb-4">Featured Recipe</h2>
-      <div class="bg-white p-4 rounded shadow">
-        <h3 class="text-lg highlight">Prosciutto Salmon with Garlic Butter</h3>
-        <p class="text-[#333333] mb-2">Categories: <a href="/categories/dinner" class="text-[#D94F30] hover:text-[#8A9A5B]">Dinner</a>, <a href="/categories/seafood" class="text-[#D94F30] hover:text-[#8A9A5B]">Seafood</a></p>
-        <p class="text-[#333333] mb-2">A simple yet elegant dish with crispy prosciutto and rich garlic butter, perfect for a healthy family dinner.</p>
-        <p class="text-[#333333] mb-2">Related Recipes: Looking for more seafood dinners? Check out our upcoming <a href="/recipes/lemon-garlic-shrimp" class="text-[#D94F30] hover:text-[#8A9A5B]">Lemon Garlic Shrimp</a> recipe!</p>
-        <a href="/recipes/prosciutto-salmon-with-garlic-butter" class="highlight hover:underline">View Recipe</a>
-      </div>
-    </section>
-
-    <!-- Ad Space -->
-    <div class="mb-8 bg-gray-200 p-4 rounded text-center">
-      <p>[Ad Space - Google AdSense or Affiliate Link]</p>
-    </div>
-
-    <!-- Recipe Categories -->
-    <section>
-      <h2 class="text-xl mb-4">Explore Categories</h2>
-      <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <a href="/categories/breakfast" class="category-card p-4 rounded shadow text-center text-[#333333] hover:text-[#D94F30]">Breakfast</a>
-        <a href="/categories/dinner" class="category-card p-4 rounded shadow text-center text-[#333333] hover:text-[#D94F30]">Dinner</a>
-        <a href="/categories/seafood" class="category-card p-4 rounded shadow text-center text-[#333333] hover:text-[#D94F30]">Seafood</a>
-        <a href="/categories/sides" class="category-card p-4 rounded shadow text-center text-[#333333] hover:text-[#D94F30]">Sides</a>
-      </div>
-    </section>
-  </main>
-
-  <!-- Footer -->
-  <footer class="bg-gray-800 p-4 text-center">
-    <p class="text-[#F5E8C7]">© 2025 FitDadFeeds. All rights reserved.</p>
-  </footer>
-
-  <!-- JavaScript for Search Functionality -->
-  <script>
-    const recipes = [
-      { title: "Prosciutto Salmon with Garlic Butter", url: "/recipes/prosciutto-salmon-with-garlic-butter", categories: ["Dinner", "Seafood"], description: "A simple yet elegant dish with crispy prosciutto and rich garlic butter, perfect for a healthy family dinner." },
-      { title: "Turkey and Quinoa Stuffed Peppers", url: "/recipes/turkey-quinoa-stuffed-peppers", categories: ["Dinner"], description: "Flavorful bell peppers stuffed with lean turkey and quinoa, a nutritious dinner option." },
-      { title: "Sweet Potato Breakfast Hash", url: "/recipes/sweet-potato-breakfast-hash", categories: ["Breakfast"], description: "A savory breakfast hash with sweet potatoes and fresh herbs, great for a healthy start." }
-    ];
-
-    const searchInput = document.getElementById('searchInput');
-    const searchResults = document.getElementById('searchResults');
-
-    searchInput.addEventListener('input', function() {
-      const query = searchInput.value.toLowerCase();
-      searchResults.innerHTML = '';
-
-      if (query.length === 0) return;
-
-      const filteredRecipes = recipes.filter(recipe =>
-        recipe.title.toLowerCase().includes(query) ||
-        recipe.description.toLowerCase().includes(query)
-      );
-
-      if (filteredRecipes.length === 0) {
-        searchResults.innerHTML = '<p class="text-[#333333] p-2">No recipes found.</p>';
-        return;
-      }
-
-      filteredRecipes.forEach(recipe => {
-        const resultDiv = document.createElement('div');
-        resultDiv.className = 'search-result';
-        const categoryLinks = recipe.categories.map(cat => `<a href="/categories/${cat.toLowerCase()}" class="text-[#D94F30] hover:text-[#8A9A5B]">${cat}</a>`).join(', ');
-        let relatedRecipes = '';
-        if (recipe.title === "Prosciutto Salmon with Garlic Butter") {
-          relatedRecipes = 'Looking for more seafood dinners? Check out our upcoming <a href="/recipes/lemon-garlic-shrimp" class="text-[#D94F30] hover:text-[#8A9A5B]">Lemon Garlic Shrimp</a> recipe!';
-        }
-        resultDiv.innerHTML = `
-          <h3 class="text-lg font-semibold">${recipe.title}</h3>
-          <p class="text-[#333333] mb-2">Categories: ${categoryLinks}</p>
-          <p class="text-[#333333] mb-2">${recipe.description}</p>
-          ${relatedRecipes ? `<p class="text-[#333333] mb-2">Related Recipes: ${relatedRecipes}</p>` : ''}
-          <a href="${recipe.url}" class="highlight hover:underline">View Recipe</a>
-        `;
-        searchResults.appendChild(resultDiv);
-      });
-    });
-
-    // Enhanced URL cleanup and debugging
-    (function() {
-      // Clean up current URL on page load
-      const currentUrl = window.location.pathname;
-      const cleanCurrentUrl = currentUrl.replace(/\/+$/, '');
-      if (currentUrl !== cleanCurrentUrl) {
-        console.log('Cleaning current URL:', currentUrl, '→', cleanCurrentUrl);
-        window.history.replaceState(null, '', cleanCurrentUrl);
-      }
-
-      // Handle link clicks
-      let isNavigating = false;
-      document.querySelectorAll('a').forEach(link => {
-        link.addEventListener('click', function(event) {
-          if (isNavigating) {
-            console.log('Navigation blocked: Already navigating');
-            event.preventDefault();
-            return;
-          }
-
-          const originalHref = this.getAttribute('href');
-          const cleanHref = originalHref.replace(/\/+$/, '');
-          
-          console.log('Original href:', originalHref);
-          console.log('Cleaned href:', cleanHref);
-
-          if (originalHref !== cleanHref || originalHref.endsWith('/')) {
-            event.preventDefault();
-            isNavigating = true;
-            window.location.href = cleanHref;
-
-            // Reset navigation flag after a delay
-            setTimeout(() => {
-              isNavigating = false;
-            }, 1000);
-          }
-        });
-      });
-    })();
-  </script>
+    <footer class="bg-gray-800 text-f5e8c7 text-center py-4 no-print">
+        <p>© 2025 FitDadFeeds. All rights reserved.</p>
+    </footer>
 </body>
 </html>
